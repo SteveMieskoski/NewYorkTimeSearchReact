@@ -2,7 +2,7 @@ import axios from "axios";
 
 var apikey = "ba33b9c200434dd5a6ffb719a3cc2fc2";
 
-const helpers = {
+export const helpers = {
 
 	runQuery: function(topic, startYr, endYr) {
 
@@ -68,4 +68,3 @@ const helpers = {
 
 };
 
-export default helpers;
