@@ -8,8 +8,6 @@ module.exports = (app) => {
 	});
 
 	app.get("/api/saved", (req, res) => {
-
-
 		article.find({}).sort([["date", "descending"]]).exec((err, savedArticles) => {
 			if (err) {
 				console.log(err);
@@ -24,13 +22,11 @@ module.exports = (app) => {
 
 	app.post("/api/saved", (req, res) => {
 		console.log("BODY: " + req.body);
-		const {title, date, url} = req.body;
-
-
 		article.create({
-			title,
-			date,
-			url
+			title: req.body.title,
+			url: req.body.url,
+			articleId: req.body.article_id,
+			date: req.body.pub_date
 		}, (err) => {
 			if (err) {
 				console.log(err);
@@ -44,9 +40,9 @@ module.exports = (app) => {
 
 	app.delete("/api/delete", (req, res) => {
 		console.log('Delete: ', req.body);
-		const {url} = req.body;
-
-		article.findOneAndRemove(url, (err) => {
+		let id = req.body.id;
+		console.log(id);
+		article.findByIdAndRemove(id, (err) => {
 			if (err) {
 				console.log(err);
 			}

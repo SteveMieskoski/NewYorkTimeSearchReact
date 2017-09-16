@@ -2,16 +2,23 @@ import axios from "axios";
 
 var apikey = "ba33b9c200434dd5a6ffb719a3cc2fc2";
 
-export const helpers = {
 
-	runQuery: function(topic, startYr, endYr) {
-
-		// cleans up format of search terms
+module.exports = {
+	runSearch: function(topic, startYr, endYr)  {
+		var begin_date, end_date;
 		var q = topic.trim();
-		var begin_date = startYr.trim() + "0101";
-		var end_date = endYr.trim() + "1231";
+		if(startYr){
+			begin_date = startYr.trim() + "0101";
+		} else {
+			begin_date = "20160101";
+		}
 
-		// runs search query
+		if(endYr){
+			end_date = endYr.trim() + "1231";
+		} else {
+			end_date = "20161231";
+		}
+
 		return axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
 			params: {
 				"apikey": apikey,
@@ -28,7 +35,7 @@ export const helpers = {
 		});
 	},
 
-	getSaved: function() {
+	getSaved: function()  {
 		return axios.get(
 			'/api/saved'
 		).then(function(res) {
@@ -39,11 +46,10 @@ export const helpers = {
 		});
 	},
 
-	saveArticle: function(article) {
+	saveArticle: function(article)  {
 		return axios.post('/api/saved', {
-			// formats nyt api data to store in db
 			article_id: article._id,
-			title: article.headline.main,
+			title: article.snippet,
 			url: article.web_url,
 			pub_date: article.pub_date
 		}).then(function(res) {
@@ -56,7 +62,7 @@ export const helpers = {
 	deleteSaved: function(article) {
 		return axios({
 			method: 'delete',
-			url: '/api/saved',
+			url: '/api/delete',
 			data: article,
 			responseType: 'json'
 		}).then(function(res) {

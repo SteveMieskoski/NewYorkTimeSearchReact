@@ -1,8 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Routes from './routes.jsx';
+var React = require("react");
+var ReactDOM = require("react-dom");
+var routes = require("./routes.jsx");
+ReactDOM.render(routes, document.getElementById("app"));
 
-ReactDOM.render(
-	<Routes />,
-	document.getElementById("app")
-);

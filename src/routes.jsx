@@ -1,24 +1,27 @@
 
-import React from 'react';
-import {
-	BrowserRouter as Router,
-	Route
-} from 'react-router-dom';
+var React = require("react");
 
-import Main from "./components/Main.jsx";
-import Search from "./components/Search.jsx";
-import Result from "./components/Result.jsx";
-import Saved from "./components/Saved.jsx";
+var router = require("react-router");
 
-const Routes = (props) => (
-	<Router {...props}>
-		<Main>
-			<Route exact path="/" component={Search} />
-			<Route path="/Search" component={Search} />
-			<Route path="/Saved" component={Saved} />
-			<Route path="/Result" component={Result}/>
-		</Main>
+var Route = router.Route;
+
+var Router = router.Router;
+
+var hashHistory = router.hashHistory;
+
+var Main = require("./components/Main.jsx");
+var Results = require("./components/Results.jsx");
+var Search = require("./components/Search.jsx");
+var Saved = require("./components/Saved.jsx");
+
+module.exports = (
+	
+	<Router history={hashHistory}>
+		<Route path="/" component={Main}>
+			<Route path="Search" component={Search}>
+				<Route path="Result" component={Results}/>
+			</Route>
+			<Route path="Saved" component={Saved}/>
+		</Route>
 	</Router>
 );
-
-export default Routes;

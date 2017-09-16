@@ -17,6 +17,10 @@ const ArticleSchema = new Schema({
 	url: {
 		type: String,
 		required: true
+	},
+	articleId: {
+		type: String,
+		required: true
 	}
 
 });
